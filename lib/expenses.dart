@@ -1,3 +1,4 @@
+import 'package:daily_expense/Widget/expenses_list/new_expense.dart';
 import 'package:flutter/material.dart';
 import 'package:daily_expense/models/expense.dart';
 import 'package:daily_expense/Widget/expenses_list/expenses_list.dart';
@@ -29,9 +30,25 @@ class _Expenses extends State<Expenses> {
         category: Category.food),
   ];
 
+  void _openAddExpenseOverlay() {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => const NewExpense(),
+    );
+  }
+
   @override
   Widget build(context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Flutter Expence Tracker'),
+        actions: [
+          IconButton(
+            onPressed: _openAddExpenseOverlay,
+            icon: const Icon(Icons.add),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           const Text('The Chart'),
