@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:daily_expense/models/expense.dart';
 
 class NewExpense extends StatefulWidget {
   const NewExpense({super.key});
@@ -9,10 +10,36 @@ class NewExpense extends StatefulWidget {
 }
 
 class _NewExpenseState extends State<NewExpense> {
-  var _enteredTitle = '';
+  // var _enteredTitle = '';
 
-  void _saveTitleInput(String inputValue) {
-    _enteredTitle = inputValue;
+  // void _saveTitleInput(String inputValue) {
+  //   _enteredTitle = inputValue;
+  // }
+
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+  DateTime? selectedDate;
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _amountController.dispose();
+    super.dispose();
+  }
+
+  void _openDatePicker() async {
+    final now = DateTime.now();
+    final firstDate = DateTime(now.year - 1, now.month, now.day);
+    final _pickedDate = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: firstDate,
+      lastDate: now,
+    );
+
+    setState(() {
+      selectedDate = _pickedDate;
+    });
   }
 
   @override
@@ -22,7 +49,7 @@ class _NewExpenseState extends State<NewExpense> {
       child: Column(
         children: [
           TextField(
-            onChanged: _saveTitleInput,
+            controller: _titleController,
             maxLength: 50,
             decoration: const InputDecoration(
               label: Text('Title'),
@@ -30,14 +57,60 @@ class _NewExpenseState extends State<NewExpense> {
           ),
           Row(
             children: [
+              Expanded(
+                child: TextField(
+                  controller: _amountController,
+                  decoration: const InputDecoration(
+                    prefix: Text('\$ '),
+                    label: Text('Amount'),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 18,
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      selectedDate == null
+                          ? 'No Date Selected'
+                          : formatter.format(selectedDate!),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    IconButton(
+                      onPressed: _openDatePicker,
+                      icon: const Icon(Icons.calendar_month),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Row(
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancel'),
+              ),
               ElevatedButton(
                 onPressed: () {
-                  print(_enteredTitle);
+                  print(_titleController.text);
+                  print(_amountController.text);
                 },
                 child: const Text('Save Expense'),
               ),
             ],
-          )
+          ),
         ],
       ),
     );
