@@ -43,6 +43,32 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
+  void _submitExpenseData() {
+    final enteredAmmount = double.tryParse(_amountController.text);
+    final isAmountInvalid = enteredAmmount == null || enteredAmmount <= 0;
+    if (_titleController.text.trim().isEmpty ||
+        isAmountInvalid ||
+        selectedDate == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Invalid Data'),
+          content: const Text(
+            'Please Make sure Title, Amount, Date and Category is valid input type',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Okay'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(context) {
     return Padding(
@@ -123,8 +149,7 @@ class _NewExpenseState extends State<NewExpense> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  print(_titleController.text);
-                  print(_amountController.text);
+                  _submitExpenseData();
                 },
                 child: const Text('Save Expense'),
               ),
