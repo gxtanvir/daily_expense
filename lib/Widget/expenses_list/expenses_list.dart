@@ -3,15 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:daily_expense/models/expense.dart';
 
 class ExpensesList extends StatelessWidget {
-  const ExpensesList({super.key, required this.expenses});
+  const ExpensesList({
+    super.key,
+    required this.expenses,
+    required this.onRemoveExpense,
+  });
 
   final List<Expense> expenses;
+  final Function(Expense expense) onRemoveExpense;
 
   @override
   Widget build(context) {
     return ListView.builder(
       itemCount: expenses.length,
-      itemBuilder: ((context, index) => ExpensesItem(expense: expenses[index])),
+      itemBuilder: ((context, index) => Dismissible(
+            key: ValueKey(expenses[index]),
+            onDismissed: (direction) => onRemoveExpense(
+              expenses[index],
+            ),
+            child: ExpensesItem(
+              expense: expenses[index],
+            ),
+          )),
     );
   }
 }
