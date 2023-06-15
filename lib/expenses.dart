@@ -13,21 +13,21 @@ class Expenses extends StatefulWidget {
 
 class _Expenses extends State<Expenses> {
   final List<Expense> _registeredExpense = [
-    // Expense(
-    //     title: 'Flutter Course',
-    //     amount: 88.99,
-    //     date: DateTime.now(),
-    //     category: Category.work),
-    // Expense(
-    //     title: 'Mini Tour',
-    //     amount: 16.79,
-    //     date: DateTime.now(),
-    //     category: Category.leisure),
-    // Expense(
-    //     title: 'Dinner',
-    //     amount: 12.75,
-    //     date: DateTime.now(),
-    //     category: Category.food),
+    Expense(
+        title: 'Flutter Course',
+        amount: 88.99,
+        date: DateTime.now(),
+        category: Category.work),
+    Expense(
+        title: 'Mini Tour',
+        amount: 16.79,
+        date: DateTime.now(),
+        category: Category.leisure),
+    Expense(
+        title: 'Dinner',
+        amount: 12.75,
+        date: DateTime.now(),
+        category: Category.food),
   ];
 
   // OverLay Method
