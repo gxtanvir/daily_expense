@@ -4,10 +4,34 @@ import 'package:daily_expense/expenses.dart';
 final kColorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 98, 44, 191),
 );
+final kDarkColorScheme = ColorScheme.fromSeed(
+  seedColor: const Color.fromARGB(155, 27, 146, 132),
+  brightness: Brightness.dark,
+);
 
 void main() {
   runApp(
     MaterialApp(
+      darkTheme: ThemeData().copyWith(
+        useMaterial3: true,
+        colorScheme: kDarkColorScheme,
+        appBarTheme: const AppBarTheme().copyWith(
+            backgroundColor: kDarkColorScheme.primaryContainer,
+            foregroundColor: kDarkColorScheme.onPrimaryContainer),
+        cardTheme: CardTheme().copyWith(
+          color: kDarkColorScheme.secondaryContainer,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kDarkColorScheme.primaryContainer,
+            foregroundColor: kDarkColorScheme.onPrimaryContainer,
+          ),
+        ),
+      ),
       theme: ThemeData().copyWith(
         useMaterial3: true,
         colorScheme: kColorScheme,
@@ -34,6 +58,7 @@ void main() {
               ),
             ),
       ),
+      // themeMode: ThemeMode.dark,
       home: const Expenses(),
     ),
   );
